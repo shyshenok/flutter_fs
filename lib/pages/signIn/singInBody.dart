@@ -6,7 +6,6 @@ class SingInBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Expanded(
         child: new Container(
-            color: Colors.blue,
             child: new Center(
                 child: new LoginIconsButton()
             )
@@ -38,46 +37,50 @@ class _SelecteLogInAccount extends State<LoginIconsButton> {
       Color clickedColor = Colors.red;
       return new GestureDetector(
         onTap: _clickedButton,
-          child: new Container(
-            width: 200.0,
-            height: 200.0,
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                new IconButton(
-                    icon: new Icon(icon),
-                    color: (_ifClicked ? color : clickedColor),
-                    onPressed: _clickedButton
-                ),
-                new Container(
-                  margin: const EdgeInsets.only(top: 8.0),
-                  child: new Text(
-                    label,
-                    style: new TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
-                      color:  _ifClicked ? color : clickedColor,
-                    ),
-                  ),
-//                  decoration: new BoxDecoration(
-//                    color: _ifClicked ? Colors.lightGreen[700] : Colors.grey[600],
-//                  ),
-                ),
-              ],
-            ),
+        child: new Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: new EdgeInsets.symmetric(
+              horizontal: 8.00
           ),
+          decoration: new BoxDecoration(
+            color: Colors.blue,
+          ),
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              new IconButton(
+                  icon: new Icon(icon),
+                  color: (_ifClicked ? color : clickedColor),
+                  onPressed: _clickedButton
+              ),
+              new Container(
+                padding: new EdgeInsets.symmetric(horizontal: 8.0),
+                child: new Text(
+                  label,
+                  style: new TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w600,
+                    color: _ifClicked ? color : clickedColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
 
       );
     }
     return new Container(
-          child: new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                buildButtonColumn(Icons.call, 'CALL',),
-              ]
-          ),
+      child: new Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+
+            buildButtonColumn(Icons.call, 'CALL'),
+            buildButtonColumn(Icons.call, 'CALL'),
+          ]
+      ),
     );
   }
 }
