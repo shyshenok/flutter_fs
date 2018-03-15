@@ -31,13 +31,11 @@ class _SelecteLogInAccount extends State<LoginIconsButton> {
   @override
   Widget build(BuildContext context) {
 
-    Column buildButtonColumn(IconData icon, String label) {
+    Row buildButtonColumn(IconData icon, String label) {
       Color color = Theme.of(context).buttonColor;
       Color clickedColor = Colors.red;
 
-      return new Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
+      return new Row(
         children: [
           new IconButton(
               icon: new Icon(icon),
@@ -58,14 +56,13 @@ class _SelecteLogInAccount extends State<LoginIconsButton> {
         ],
       );
     }
-    return new GestureDetector(
-      onTap: _clickedButton,
-      child: new Container(
+    return  new Container(
         child: new Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             buildButtonColumn(Icons.call, 'CALL',),
           ]
-        ),
       ),
     );
   }
