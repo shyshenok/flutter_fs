@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:async';
 
 
 class SingInBody extends StatelessWidget {
@@ -26,6 +28,8 @@ class SingInBody extends StatelessWidget {
 }
 
 class LoginIconsButton extends StatelessWidget {
+
+  final googleSignIn = new GoogleSignIn();
   final Icon icon;
   final String string;
 
