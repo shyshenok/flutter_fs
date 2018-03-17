@@ -4,32 +4,46 @@ import 'dart:async';
 
 
 class SingInBody extends StatelessWidget {
+
+  final googleSignIn = new GoogleSignIn();
+
   @override
   Widget build(BuildContext context) {
+
     Color color = Theme
         .of(context)
         .buttonColor;
-    return new Expanded(
-        child: new Container(
-            child: new Center(
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    new LoginIconsButton(new Icon(Icons.call, color: color), 'CALL'),
 
-                  ],
+    return new Expanded(
+            child: new Container(
+                child: new Center(
+                  child: new GestureDetector(
+                    onTap: _ensureLoggedIn,
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        new LoginIconsButton(new Icon(Icons.call, color: color), 'CALL'),
+
+                      ],
+                    )
                 )
             )
-        )
-
+            )
     );
+  }
+  Future<Null> _ensureLoggedIn() async {
+    GoogleSignInAccount user = googleSignIn.currentUser;
+    if (user == null)
+      user = await googleSignIn.signInSilently();
+    if (user == null) {
+      await googleSignIn.signIn();
+    }
   }
 }
 
 class LoginIconsButton extends StatelessWidget {
 
-  final googleSignIn = new GoogleSignIn();
   final Icon icon;
   final String string;
 
@@ -40,9 +54,7 @@ class LoginIconsButton extends StatelessWidget {
      Color color = Theme
         .of(context)
         .buttonColor;
-    return new GestureDetector(
-//        onTap: _clickedButton,
-      child: new Container(
+    return  new Container(
         margin: const EdgeInsets.symmetric(horizontal: 8.0),
         padding: new EdgeInsets.symmetric(
             vertical: 8.00,
@@ -79,8 +91,6 @@ class LoginIconsButton extends StatelessWidget {
             ),
           ],
         ),
-      ),
-
     );
   }
 }
