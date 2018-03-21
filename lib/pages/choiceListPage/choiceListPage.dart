@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fs/pages/choiceListPage/moviesList/moviesList.dart';
 import 'package:flutter_fs/pages/signIn/signIn.dart';
-import 'package:flutter_fs/pages/style/style.dart';
 import 'package:flutter_fs/utils/usersManager.dart';
 
 
@@ -13,7 +12,6 @@ class ChoiceList extends StatelessWidget {
     return new Scaffold(
         appBar: new AppBar(
           title: new Text('Select list'),
-          automaticallyImplyLeading: false,
           actions: <Widget>[
             new IconButton(
                 icon: new Icon (Icons.exit_to_app, color: Colors.white,),
@@ -27,6 +25,26 @@ class ChoiceList extends StatelessWidget {
                 }
             )
           ],
+        ),
+        drawer: new Drawer(
+            child: new ListView(
+              children: <Widget> [
+                new DrawerHeader(child: new Text('Header'),),
+                new ListTile(
+                  title: new Text('First Menu Item'),
+                  onTap: () {},
+                ),
+                new ListTile(
+                  title: new Text('Second Menu Item'),
+                  onTap: () {},
+                ),
+                new Divider(),
+                new ListTile(
+                  title: new Text('About'),
+                  onTap: () {},
+                ),
+              ],
+            )
         ),
         body: new Container(
           decoration: new BoxDecoration(
