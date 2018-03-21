@@ -22,7 +22,10 @@ class SingInBody extends StatelessWidget {
                       print('navigate');
                       Navigator.of(context).push(
                         new PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => new ChoiceList()
+                          pageBuilder: (_, __, ___) => new ChoiceList(),
+//                          transitionsBuilder: (context, animation, secondaryAnimation,
+//                              child) =>
+//                          new FadeTransition(opacity: animation),
                         ),
                       );
                     } else {
