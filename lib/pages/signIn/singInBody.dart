@@ -23,9 +23,6 @@ class SingInBody extends StatelessWidget {
                       Navigator.of(context).push(
                         new PageRouteBuilder(
                           pageBuilder: (_, __, ___) => new ChoiceList(),
-//                          transitionsBuilder: (context, animation, secondaryAnimation,
-//                              child) =>
-//                          new FadeTransition(opacity: animation),
                         ),
                       );
                     } else {

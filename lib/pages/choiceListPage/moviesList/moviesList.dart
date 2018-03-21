@@ -1,0 +1,19 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+
+class MoviesList extends StatelessWidget {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold (
+      appBar: new AppBar(
+        title: new Text('Movies'),
+      ),
+      body: new Text('books'),
+
+    );
+  }
+
+}
