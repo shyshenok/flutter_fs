@@ -46,8 +46,8 @@ class GradientAppBar extends StatelessWidget {
         gradient: new LinearGradient(
             colors: [
               const Color(0xFF00CCFF),
-              const Color(0xFF3366FF),
-              const Color(0xFFF38FFF)
+              const Color(0xFFE6E78D),
+              const Color(0xFF228ba0)
             ],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 0.0),

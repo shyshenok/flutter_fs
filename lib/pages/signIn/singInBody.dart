@@ -14,6 +14,12 @@ class SingInBody extends StatelessWidget {
 
     return new Expanded(
         child: new Container(
+          decoration: new BoxDecoration(
+            image: new DecorationImage(
+              image: new AssetImage("assets/images/3.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
             child: new Center(
               child: new GestureDetector(
                 onTap: () {
@@ -56,9 +62,7 @@ class LoginIconsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = Theme
-        .of(context)
-        .buttonColor;
+    Color color = Colors.white;
     return new Container(
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
       padding: new EdgeInsets.symmetric(
@@ -66,7 +70,7 @@ class LoginIconsButton extends StatelessWidget {
           horizontal: 12.00
       ),
       decoration: new BoxDecoration(
-        color: Colors.blue,
+        color: new Color(0xFF228ba0),
         borderRadius: new BorderRadius.all(
           const Radius.circular(2.0),
         ),
