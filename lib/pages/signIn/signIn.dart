@@ -19,7 +19,7 @@ class SignIn extends StatelessWidget {
 class GradientAppBar extends StatelessWidget {
 
   final String title;
-  final double barHeight = 54.0;
+  final double barHeight = 56.0;
 
   GradientAppBar(this.title);
 

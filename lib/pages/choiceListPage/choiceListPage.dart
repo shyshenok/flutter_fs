@@ -15,9 +15,6 @@ class ChoiceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Select list'),
-        ),
         drawer: new Drawer(
             child: new ListView(
               children: <Widget>[
@@ -56,23 +53,32 @@ class ChoiceList extends StatelessWidget {
               ],
             )
         ),
-        body: new Container(
-          decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new AssetImage("assets/images/3.jpg"),
-                fit: BoxFit.cover,
-              )
-          ),
-          child: new Center(
-            child: new Row (
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                new ButtonInList(new MoviesList())
+        body: new DefaultTabController(
+          length: 3,
+          child: new Scaffold(
+            appBar: new AppBar(
+              title: new Text('Select list'),
+              leading: new IconButton(
+                icon: new Icon(Icons.menu),
+                onPressed: () {},
+              ),
+              bottom: new TabBar(
+                tabs: [
+                  new Tab(text:'Movies'),
+                  new Tab(text:'Places'),
+                  new Tab(text:'Books'),
+                ],
+              ),
+            ),
+            body: new TabBarView(
+              children: [
+                new Icon(Icons.directions_car),
+                new Icon(Icons.directions_transit),
+                new Icon(Icons.directions_bike),
               ],
             ),
           ),
-        )
+        ),
     );
   }
 }
