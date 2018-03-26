@@ -17,6 +17,7 @@ class ChoiceList extends StatelessWidget {
           length: 3,
           child: new Scaffold(
             appBar: new AppBar(
+              backgroundColor: new Color(0xFF228ba0),
               title: new Text('Select list'),
               bottom: new TabBar(
                 tabs: [
