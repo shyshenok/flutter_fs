@@ -31,7 +31,8 @@ void main() =>
                       }
                     }
                 }
-              },)
+              },
+            )
         ));
 
 Future<GoogleSignInAccount> _ifUserSignIn() async {

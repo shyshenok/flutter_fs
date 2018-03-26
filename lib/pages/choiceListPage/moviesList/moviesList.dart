@@ -8,10 +8,8 @@ class MoviesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold (
-      appBar: new AppBar(
-        title: new Text('Movies'),
-      ),
-      body: new Text('books'),
+
+      body: new Text('Movies'),
 
     );
   }
