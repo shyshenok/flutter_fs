@@ -15,8 +15,8 @@ class MoviesList extends StatelessWidget {
         child: new Stack(
           children: <Widget>[
             new Positioned (
-              right: 24.0,
-              bottom: 24.0,
+              right: 16.0,
+              bottom: 16.0,
               child: new Container(
                 child: new FloatingActionButton(
                     elevation: 6.0,
