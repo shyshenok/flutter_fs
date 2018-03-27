@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fs/pages/signIn/signIn.dart';
 import 'package:flutter_fs/utils/usersManager.dart';
 
 
@@ -36,11 +35,7 @@ createDrawer (context) {
             title: new Text('Sign Out'),
             onTap: () {
               new UserManager().googleSignIn.signOut();
-              Navigator.of(context).push(
-                new PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => new SignIn()
-                ),
-              );
+              Navigator.of(context).pushReplacementNamed("/logout");
             },
           ),
         ],

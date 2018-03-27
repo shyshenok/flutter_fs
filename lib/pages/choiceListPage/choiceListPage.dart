@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fs/pages/choiceListPage/moviesList/moviesList.dart';
 import 'package:flutter_fs/pages/drawer.dart';
-import 'package:flutter_fs/pages/signIn/signIn.dart';
-import 'package:flutter_fs/utils/usersManager.dart';
 
 
 

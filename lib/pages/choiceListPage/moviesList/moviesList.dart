@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,14 @@ class MoviesList extends StatelessWidget {
                     elevation: 6.0,
                     child: new Icon(Icons.add),
                     backgroundColor: new Color(0xFF228ba0),
-                    onPressed: () {}
+                    onPressed: () {
+                      showDialog(context: context, child:
+                      new AlertDialog(
+                        title: new Text("My Super title"),
+                        content: new Text("Hello World"),
+                      )
+                      );
+                    }
                 ),
               ),
               right: 24.0,
@@ -30,3 +38,4 @@ class MoviesList extends StatelessWidget {
     );
   }
 }
+
