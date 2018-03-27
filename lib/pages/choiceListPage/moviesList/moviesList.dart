@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 
 
 class MoviesList extends StatelessWidget {
@@ -42,11 +44,14 @@ class CreateMoviesList extends StatefulWidget {
 }
 
 class CreateMoviesListState extends State<CreateMoviesList> {
-
+  final reference = FirebaseDatabase.instance.reference().child('list');
   final TextEditingController _listName = new TextEditingController();
 
-  void onPressed() {
-    print("button pressed $_listName");
+  void saveListName( String text ) {
+    print(text);
+    reference.push().set({
+      'text': text
+    });
   }
 
   @override
@@ -63,14 +68,12 @@ class CreateMoviesListState extends State<CreateMoviesList> {
         ),
         controller: _listName,
         onChanged: (String text) {
-          if (_listName == null) {
-
-          }
+          print(_listName.text);
         },
       ),
       actions: <Widget>[
         new FlatButton(
-            onPressed: () {onPressed();},
+            onPressed: () {saveListName(_listName.text);},
             child: new Text('Save')
         ),
       ],
