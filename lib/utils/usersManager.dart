@@ -2,12 +2,12 @@
 import 'dart:async';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserManager {
   static final UserManager _singleton = new UserManager._internal();
   final analytics = new FirebaseAnalytics();
-
+  final auth = FirebaseAuth.instance;
 
   factory UserManager() {
     return _singleton;
@@ -32,7 +32,16 @@ class UserManager {
     if (user == null && forceLogin)
       user = await userManager.googleSignIn.signIn();
       analytics.logLogin();
-    print(forceLogin);
+
+    if (await auth.currentUser() == null) {
+      GoogleSignInAuthentication credentials =
+      await googleSignIn.currentUser.authentication;
+      await auth.signInWithGoogle(
+        idToken: credentials.idToken,
+        accessToken: credentials.accessToken,
+      );
+
+    }
 
     return user;
   }
