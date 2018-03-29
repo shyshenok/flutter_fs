@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter_fs/utils/usersManager.dart';
+import 'package:flutter_fs/pages/addingFilmModalDialog.dart';
 
 
 class MoviesList extends StatefulWidget {
@@ -12,15 +12,6 @@ class MoviesList extends StatefulWidget {
 final mainReference = FirebaseDatabase.instance.reference();
 
 class _MoviesListState extends State<MoviesList> {
-
- List<WeightEntry> weightSaves = new List();
-ScrollController _listViewScrollController = new ScrollController();
-double _itemExtent = 50.0;
-
-_MoviesListState() {
-  mainReference.onChildAdded.listen(_onEntryAdded);
-  mainReference.onChildChanged.listen(_onEntryEdited);
-}
 
 @override
   Widget build(BuildContext context) {
@@ -46,7 +37,7 @@ _MoviesListState() {
                     onPressed: () {
                       showDialog(
                           context: context,
-                          child: new CreateMoviesList()
+                          child: new CreateListModalDialog()
                       );
                     }
                 ),
@@ -59,64 +50,3 @@ _MoviesListState() {
   }
 }
 
-class CreateMoviesList extends StatefulWidget {
-  @override
-  State createState() => new CreateMoviesListState();
-}
-
-class CreateMoviesListState extends State<CreateMoviesList> {
-  final reference = FirebaseDatabase.instance.reference().child('list');
-  final TextEditingController _listName = new TextEditingController();
-
-  void saveListName(String text) {
-    print(text);
-    reference.push().set({
-      'text': text,
-      'owner': new UserManager().googleSignIn.currentUser.id
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new AlertDialog(
-      contentPadding: new EdgeInsets.symmetric(
-          vertical: 8.00,
-          horizontal: 22.00),
-      title: new Text("Create new list"),
-      content: new Container(
-        width: 300.0,
-        height: 100.0,
-        child: new Center(
-          child: new TextField(
-            controller: _listName,
-            autocorrect: true,
-            maxLength: 150,
-            maxLines: 1,
-            decoration: new InputDecoration(
-                hintText: 'Type list name',
-                labelText: 'List name'
-            ),
-          ),
-        ),
-      ),
-      actions: <Widget>[
-        new SimpleDialogOption(
-          child: new FlatButton(
-              onPressed: () {
-                saveListName(_listName.text);
-                Navigator.pop(context);
-              },
-              child: new Text(
-                  'Save',
-                  style: new TextStyle(
-                      fontSize: 22.00,
-                      color: new Color(0xFF228ba0)
-                  )
-              )
-          ),
-        )
-      ],
-
-    );
-  }
-}
