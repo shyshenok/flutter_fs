@@ -63,38 +63,45 @@ class CreateMoviesListState extends State<CreateMoviesList> {
 
   @override
   Widget build(BuildContext context) {
-    return new SimpleDialog(
+    return new AlertDialog(
       contentPadding: new EdgeInsets.symmetric(
           vertical: 8.00,
           horizontal: 22.00),
       title: new Text("Create new list"),
-      children: <Widget>[
-        new Container(
-          width: 300.0,
-          height: 100.0,
-          child: new Center(
-            child: new TextField(
-              controller: _listName,
-              autocorrect: true,
-              maxLength: 255,
-              maxLines: 1,
-              decoration: new InputDecoration(
-                  hintText: 'Type list name',
-                  labelText: 'List name'
-              ),
+      content: new Container(
+        width: 300.0,
+        height: 100.0,
+        child: new Center(
+          child: new TextField(
+            controller: _listName,
+            autocorrect: true,
+            maxLength: 150,
+            maxLines: 1,
+            decoration: new InputDecoration(
+                hintText: 'Type list name',
+                labelText: 'List name'
             ),
           ),
         ),
+      ),
+      actions: <Widget>[
         new SimpleDialogOption(
           child: new FlatButton(
               onPressed: () {
                 saveListName(_listName.text);
                 Navigator.pop(context);
               },
-              child: new Text('Save')
+              child: new Text(
+                  'Save',
+                  style: new TextStyle(
+                      fontSize: 22.00,
+                      color: new Color(0xFF228ba0)
+                  )
+              )
           ),
         )
       ],
+
     );
   }
 }
