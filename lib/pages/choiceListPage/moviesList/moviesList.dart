@@ -4,10 +4,25 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_fs/utils/usersManager.dart';
 
 
-class MoviesList extends StatelessWidget {
-
-
+class MoviesList extends StatefulWidget {
   @override
+  _MoviesListState createState() => new _MoviesListState();
+}
+
+final mainReference = FirebaseDatabase.instance.reference();
+
+class _MoviesListState extends State<MoviesList> {
+
+ List<WeightEntry> weightSaves = new List();
+ScrollController _listViewScrollController = new ScrollController();
+double _itemExtent = 50.0;
+
+_MoviesListState() {
+  mainReference.onChildAdded.listen(_onEntryAdded);
+  mainReference.onChildChanged.listen(_onEntryEdited);
+}
+
+@override
   Widget build(BuildContext context) {
     return new Scaffold (
 
