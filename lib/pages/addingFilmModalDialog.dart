@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fs/utils/listOfLists.dart';
 import 'package:flutter_fs/utils/usersManager.dart';
 
 
@@ -12,12 +13,13 @@ class CreateListModalDialogState extends State<CreateListModalDialog> {
   final reference = FirebaseDatabase.instance.reference().child('list');
   final TextEditingController _listName = new TextEditingController();
 
-  void saveListName(String text) {
-    print(text);
-    reference.push().set({
-      'text': text,
-      'owner': new UserManager().googleSignIn.currentUser.id
-    });
+
+  void saveListName(String listName) {
+    print(listName);
+
+    final entry = new ListOfLists(listName, new UserManager().googleSignIn.currentUser.id);
+
+    reference.push().set(entry.toJson());
   }
 
   @override
