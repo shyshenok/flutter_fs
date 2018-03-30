@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_fs/pages/addingFilmModalDialog.dart';
+import 'package:flutter_fs/utils/listOfLists.dart';
 
 
 class MoviesList extends StatefulWidget {
@@ -9,27 +10,29 @@ class MoviesList extends StatefulWidget {
   _MoviesListState createState() => new _MoviesListState();
 }
 
-final mainReference = FirebaseDatabase.instance.reference();
-
 class _MoviesListState extends State<MoviesList> {
 
-  List <bool> _data = new List <bool>();
+  final mainReference = FirebaseDatabase.instance.reference().child('list');
 
-@override
+  List <ListOfLists> _data = new List <ListOfLists>();
 
-void initState() {
-  setState(() {
-    for(int i =0; i<10; i++) {
-      _data.add(false);
-    }
-  });
-}
+  _MoviesListState() {
+    mainReference.onChildAdded.listen(_onEntryAdded);
+  }
 
-void _onChange(bool value, int index) {
-  setState((){
-_data[index] = value;
-  });
-}
+  _onEntryAdded(Event event) {
+    setState(() {
+      _data.add(new ListOfLists.fromSnapshot(event.snapshot));
+    });
+  }
+
+  @override
+  void initState() {
+    setState(() {
+
+    });
+  }
+
 
   Widget build(BuildContext context) {
     return new Scaffold (
@@ -44,24 +47,19 @@ _data[index] = value;
         child: new Stack(
           children: <Widget>[
             new ListView.builder(
-        itemCount: _data.length,
-              itemBuilder: (BuildContext context, int index){
-          return new Card(
-            child: new Container(
-              child: new Column(
-                children: <Widget>[
-                  new Text(('jjjjjjjjjj ${index}')),
-                  new CheckboxListTile(
-                      value: _data[index],
-                      controlAffinity: ListTileControlAffinity.leading,
-                      onChanged: (bool value){_onChange(value, index);}
-                  )
-                ],
-              ),
+                itemCount: _data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return new Card(
+                    child: new Container(
+                      child: new Column(
+                        children: <Widget>[
+                          new Text('${_data[index].listName}'),
+                        ],
+                      ),
+                    ),
+                  );
+                }
             ),
-          );
-              }
-        ),
             new Positioned (
               right: 16.0,
               bottom: 16.0,
@@ -85,4 +83,5 @@ _data[index] = value;
     );
   }
 }
+
 

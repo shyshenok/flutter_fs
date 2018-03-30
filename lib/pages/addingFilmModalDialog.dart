@@ -15,7 +15,6 @@ class CreateListModalDialogState extends State<CreateListModalDialog> {
 
 
   void saveListName(String listName) {
-    print(listName);
 
     final entry = new ListOfLists(listName, new UserManager().googleSignIn.currentUser.id);
 
