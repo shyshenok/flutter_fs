@@ -13,7 +13,24 @@ final mainReference = FirebaseDatabase.instance.reference();
 
 class _MoviesListState extends State<MoviesList> {
 
+  List <bool> _data = new List <bool>();
+
 @override
+
+void initState() {
+  setState(() {
+    for(int i =0; i<10; i++) {
+      _data.add(false);
+    }
+  });
+}
+
+void _onChange(bool value, int index) {
+  setState((){
+_data[index] = value;
+  });
+}
+
   Widget build(BuildContext context) {
     return new Scaffold (
 
@@ -26,6 +43,25 @@ class _MoviesListState extends State<MoviesList> {
         ),
         child: new Stack(
           children: <Widget>[
+            new ListView.builder(
+        itemCount: _data.length,
+              itemBuilder: (BuildContext context, int index){
+          return new Card(
+            child: new Container(
+              child: new Column(
+                children: <Widget>[
+                  new Text(('jjjjjjjjjj ${index}')),
+                  new CheckboxListTile(
+                      value: _data[index],
+                      controlAffinity: ListTileControlAffinity.leading,
+                      onChanged: (bool value){_onChange(value, index);}
+                  )
+                ],
+              ),
+            ),
+          );
+              }
+        ),
             new Positioned (
               right: 16.0,
               bottom: 16.0,
