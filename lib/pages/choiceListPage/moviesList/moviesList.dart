@@ -68,18 +68,20 @@ class _MoviesListState extends State<MoviesList> {
                     elevation: 6.0,
                     child: new Icon(Icons.add),
                     backgroundColor: new Color(0xFF228ba0),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          child: new CreateListModalDialog()
-                      );
-                    }
+                    onPressed: () {_showDialog();}
                 ),
               ),
             )
           ],
         ),
       ),
+    );
+  }
+
+  _showDialog() async {
+    await showDialog<String>(
+        context: context,
+        child: new CreateListModalDialog()
     );
   }
 }
