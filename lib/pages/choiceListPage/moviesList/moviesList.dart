@@ -49,13 +49,44 @@ class _MoviesListState extends State<MoviesList> {
             new ListView.builder(
                 itemCount: _data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return new Card(
-                    child: new Container(
-                      child: new Column(
-                        children: <Widget>[
-                          new Text('${_data[index].listName}'),
-                        ],
-                      ),
+                  return new Container(
+                    child: new Column(
+                      children: <Widget>[
+                           new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              new GestureDetector(
+                                  onTap: () {
+                                    _MoviesListStateLALAL();
+                                  },
+                                  child: new Container(
+                                    decoration: new BoxDecoration(
+                                       color: Colors.white,
+                                    ),
+                                    alignment: Alignment.centerLeft,
+                                    height: 48.00,
+                                    padding: new EdgeInsets.symmetric(
+                                        horizontal: 16.00
+                                    ),
+                                    child: new Text(
+                                      '${_data[index].listName}',
+                                      style: new TextStyle(
+                                        fontSize: 16.00,
+                                      ),
+                                    ),
+                                  )
+                              ),
+                            ],
+                          ),
+//                        ),
+
+                        new Container(
+                          height: 3.00,
+                          color: const Color(0x00000000),
+                        ),
+
+
+                      ],
                     ),
                   );
                 }
@@ -68,7 +99,9 @@ class _MoviesListState extends State<MoviesList> {
                     elevation: 6.0,
                     child: new Icon(Icons.add),
                     backgroundColor: new Color(0xFF228ba0),
-                    onPressed: () {_showDialog();}
+                    onPressed: () {
+                      _showDialog();
+                    }
                 ),
               ),
             )
@@ -83,6 +116,10 @@ class _MoviesListState extends State<MoviesList> {
         context: context,
         child: new CreateListModalDialog()
     );
+  }
+
+  _MoviesListStateLALAL() {
+    print('hello');
   }
 }
 
