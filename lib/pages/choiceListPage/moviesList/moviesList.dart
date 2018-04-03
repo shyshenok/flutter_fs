@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_fs/pages/addingFilmModalDialog.dart';
+import 'package:flutter_fs/pages/choiceListPage/moviesList/detailListOfMovies/detailListofMovies.dart';
 import 'package:flutter_fs/utils/listOfLists.dart';
 
 
@@ -12,7 +12,7 @@ class MoviesList extends StatefulWidget {
 
 class _MoviesListState extends State<MoviesList> {
 
-  final mainReference = FirebaseDatabase.instance.reference().child('list');
+  final mainReference = FirebaseDatabase.instance.reference().child('list/movies');
 
   List <ListOfLists> _data = new List <ListOfLists>();
 
@@ -52,33 +52,40 @@ class _MoviesListState extends State<MoviesList> {
                   return new Container(
                     child: new Column(
                       children: <Widget>[
-                           new Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              new GestureDetector(
-                                  onTap: () {
-                                    _MoviesListStateLALAL();
-                                  },
-                                  child: new Container(
-                                    decoration: new BoxDecoration(
-                                       color: Colors.white,
+                        new Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            new GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  new PageRouteBuilder(
+                                    pageBuilder: (_, __, ___) => new DetailListOfMovies(data: _data[index]),
+                                  ),
+                                );
+                              },
+                                onLongPress: () {
+                                  _goToDetailList();
+                                },
+                                child: new Container(
+                                  decoration: new BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  alignment: Alignment.centerLeft,
+                                  height: 48.00,
+                                  padding: new EdgeInsets.symmetric(
+                                      horizontal: 16.00
+                                  ),
+                                  child: new Text(
+                                    '${_data[index].listName}',
+                                    style: new TextStyle(
+                                      fontSize: 16.00,
                                     ),
-                                    alignment: Alignment.centerLeft,
-                                    height: 48.00,
-                                    padding: new EdgeInsets.symmetric(
-                                        horizontal: 16.00
-                                    ),
-                                    child: new Text(
-                                      '${_data[index].listName}',
-                                      style: new TextStyle(
-                                        fontSize: 16.00,
-                                      ),
-                                    ),
-                                  )
-                              ),
-                            ],
-                          ),
-//                        ),
+                                  ),
+                                )
+                            ),
+                          ],
+                        ),
 
                         new Container(
                           height: 3.00,
@@ -118,8 +125,9 @@ class _MoviesListState extends State<MoviesList> {
     );
   }
 
-  _MoviesListStateLALAL() {
-    print('hello');
+  _goToDetailList() {
+
+
   }
 }
 

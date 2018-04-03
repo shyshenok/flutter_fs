@@ -10,7 +10,7 @@ class CreateListModalDialog extends StatefulWidget {
 }
 
 class CreateListModalDialogState extends State<CreateListModalDialog> {
-  final reference = FirebaseDatabase.instance.reference().child('list');
+  final reference = FirebaseDatabase.instance.reference().child('list/movies');
   final TextEditingController _listName = new TextEditingController();
 
 

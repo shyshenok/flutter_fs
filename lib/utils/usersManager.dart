@@ -18,7 +18,6 @@ class UserManager {
   final GoogleSignIn googleSignIn = new GoogleSignIn();
 
   Future<GoogleSignInAccount> ensureLoggedIn(bool forceLogin) async {
-    print("111");
 
     final userManager = new UserManager();
 
@@ -27,7 +26,6 @@ class UserManager {
       user = await userManager.googleSignIn.signInSilently();
     print(forceLogin);
 
-    print("222");
 
     if (user == null && forceLogin)
       user = await userManager.googleSignIn.signIn();
