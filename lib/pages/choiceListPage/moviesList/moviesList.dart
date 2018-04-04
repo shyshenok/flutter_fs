@@ -4,19 +4,28 @@ import 'package:flutter_fs/pages/addingFilmModalDialog.dart';
 import 'package:flutter_fs/pages/choiceListPage/moviesList/detailListOfMovies/detailListofMovies.dart';
 import 'package:flutter_fs/utils/listOfLists.dart';
 
+typedef void OnMovieLongTap(ListOfLists item);
+
 
 class MoviesList extends StatefulWidget {
+
+  final OnMovieLongTap onLongTapCallback;
+
+  MoviesList(this.onLongTapCallback);
+
   @override
-  _MoviesListState createState() => new _MoviesListState();
+  _MoviesListState createState() => new _MoviesListState(this.onLongTapCallback);
 }
 
 class _MoviesListState extends State<MoviesList> {
+
+  final OnMovieLongTap onLongTapCallback;
 
   final mainReference = FirebaseDatabase.instance.reference().child('list/movies');
 
   List <ListOfLists> _data = new List <ListOfLists>();
 
-  _MoviesListState() {
+  _MoviesListState(this.onLongTapCallback) {
     mainReference.onChildAdded.listen(_onEntryAdded);
   }
 
@@ -27,12 +36,6 @@ class _MoviesListState extends State<MoviesList> {
   }
 
   @override
-  void initState() {
-    setState(() {
-
-    });
-  }
-
 
   Widget build(BuildContext context) {
     return new Scaffold (
@@ -65,7 +68,7 @@ class _MoviesListState extends State<MoviesList> {
                                 );
                               },
                                 onLongPress: () {
-                                  _goToDetailList();
+                                  onLongTapCallback(_data[index]);
                                 },
                                 child: new Container(
                                   decoration: new BoxDecoration(
@@ -125,10 +128,6 @@ class _MoviesListState extends State<MoviesList> {
     );
   }
 
-  _goToDetailList() {
-
-
-  }
 }
 
 
