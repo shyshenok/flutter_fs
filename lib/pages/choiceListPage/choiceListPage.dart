@@ -22,7 +22,18 @@ class _ChoiceListState extends State<ChoiceList> {
   Widget build(BuildContext context) {
     List<Widget> menu = ifTapped() ?
     <Widget>[
-      new Icon(Icons.done),
+      new IconButton(
+        onPressed: (){},
+        icon: new Icon(Icons.edit),
+      ),
+      new IconButton(
+        onPressed: (){},
+        icon: new Icon(Icons.list),
+      ),
+      new IconButton(
+        onPressed: (){},
+        icon: new Icon(Icons.delete),
+      ),
     ] :
     null;
 
@@ -32,8 +43,12 @@ class _ChoiceListState extends State<ChoiceList> {
             onWillPop: onBackPress,
             child: new Scaffold(
               appBar: new AppBar(
+                leading: ifTapped() ? new IconButton(
+                     icon: new Icon(Icons.arrow_back),
+                     onPressed: onBackPress)
+                    : null,
                 actions: menu,
-                backgroundColor: new Color(0xFF228ba0),
+                backgroundColor:(ifTapped() ? new Color(0xFF076778) : new Color(0xFF228ba0)),
                 title: new Text('Select list'),
                 bottom: new TabBar(
                   tabs: [
