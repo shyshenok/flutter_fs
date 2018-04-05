@@ -30,10 +30,6 @@ class _ChoiceListState extends State<ChoiceList> {
       ),
       new IconButton(
         onPressed: (){},
-        icon: new Icon(Icons.list),
-      ),
-      new IconButton(
-        onPressed: (){},
         icon: new Icon(Icons.delete),
       ),
     ] :
@@ -103,3 +99,5 @@ class _ChoiceListState extends State<ChoiceList> {
     return currentItem != null && currentItem == item;
   }
 }
+
+
