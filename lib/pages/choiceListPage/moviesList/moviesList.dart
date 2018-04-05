@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_fs/pages/addingFilmModalDialog.dart';
@@ -6,26 +8,34 @@ import 'package:flutter_fs/utils/listOfLists.dart';
 
 typedef void OnMovieLongTap(ListOfLists item);
 
+typedef bool IsSelected(ListOfLists item);
 
 class MoviesList extends StatefulWidget {
 
   final OnMovieLongTap onLongTapCallback;
+  final WillPopCallback onBackPress;
+  final IsSelected isSelected;
 
-  MoviesList(this.onLongTapCallback);
+
+  MoviesList(this.onLongTapCallback, this.onBackPress, this.isSelected);
 
   @override
-  _MoviesListState createState() => new _MoviesListState(this.onLongTapCallback);
+  _MoviesListState createState() =>
+      new _MoviesListState(this.onLongTapCallback, this.onBackPress, this.isSelected);
 }
 
 class _MoviesListState extends State<MoviesList> {
 
   final OnMovieLongTap onLongTapCallback;
+  final WillPopCallback onBackPress;
+  final IsSelected isSelected;
+  final mainReference = FirebaseDatabase.instance.reference().child(
+      'list/movies');
 
-  final mainReference = FirebaseDatabase.instance.reference().child('list/movies');
 
   List <ListOfLists> _data = new List <ListOfLists>();
 
-  _MoviesListState(this.onLongTapCallback) {
+  _MoviesListState(this.onLongTapCallback, this.onBackPress, this.isSelected) {
     mainReference.onChildAdded.listen(_onEntryAdded);
   }
 
@@ -35,11 +45,10 @@ class _MoviesListState extends State<MoviesList> {
     });
   }
 
-  @override
 
+  @override
   Widget build(BuildContext context) {
     return new Scaffold (
-
       body: new Container(
         decoration: new BoxDecoration(
           image: new DecorationImage(
@@ -59,20 +68,24 @@ class _MoviesListState extends State<MoviesList> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             new GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  new PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) => new DetailListOfMovies(data: _data[index]),
-                                  ),
-                                );
-                              },
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    new PageRouteBuilder(
+                                      pageBuilder: (_, __, ___) =>
+                                      new DetailListOfMovies(
+                                          data: _data[index]),
+                                    ),
+                                  );
+                                },
                                 onLongPress: () {
                                   onLongTapCallback(_data[index]);
                                 },
                                 child: new Container(
                                   decoration: new BoxDecoration(
-                                    color: Colors.white,
+                                    color:  isSelected(_data[index])
+                                        ? Colors.red
+                                        : Colors.white,
                                   ),
                                   alignment: Alignment.centerLeft,
                                   height: 48.00,
@@ -89,7 +102,6 @@ class _MoviesListState extends State<MoviesList> {
                             ),
                           ],
                         ),
-
                         new Container(
                           height: 3.00,
                           color: const Color(0x00000000),
@@ -127,7 +139,6 @@ class _MoviesListState extends State<MoviesList> {
         child: new CreateListModalDialog()
     );
   }
-
 }
 
 

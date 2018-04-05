@@ -17,9 +17,11 @@ class _ChoiceListState extends State<ChoiceList> {
 
   ListOfLists currentItem;
 
-  @override
+  MoviesList moviesList;
 
+  @override
   Widget build(BuildContext context) {
+
     List<Widget> menu = ifTapped() ?
     <Widget>[
       new IconButton(
@@ -36,6 +38,8 @@ class _ChoiceListState extends State<ChoiceList> {
       ),
     ] :
     null;
+
+    moviesList = new MoviesList(onLongTap, onBackPress, isSelected);
 
     return new DefaultTabController(
         length: 3,
@@ -61,7 +65,7 @@ class _ChoiceListState extends State<ChoiceList> {
               drawer: createDrawer(context),
               body: new TabBarView(
                 children: [
-                  new MoviesList(onLongTap),
+                  moviesList,
                   new Icon(Icons.directions_transit),
                   new Icon(Icons.directions_bike),
                 ],
@@ -77,9 +81,7 @@ class _ChoiceListState extends State<ChoiceList> {
   }
 
   void onLongTap(ListOfLists item) {
-    print(item);
     currentItem = item;
-
     setState(() {
 
     });
@@ -91,9 +93,13 @@ class _ChoiceListState extends State<ChoiceList> {
 
     currentItem = null;
 
-    setState(() {
+    setState(() {});
 
-    });
     return new Future.value(!flag);
+  }
+
+  bool isSelected(ListOfLists item) {
+
+    return currentItem != null && currentItem == item;
   }
 }
