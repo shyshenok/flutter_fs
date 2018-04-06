@@ -21,7 +21,8 @@ class MoviesList extends StatefulWidget {
 
   @override
   _MoviesListState createState() =>
-      new _MoviesListState(this.onLongTapCallback, this.onBackPress, this.isSelected);
+      new _MoviesListState(
+          this.onLongTapCallback, this.onBackPress, this.isSelected);
 }
 
 class _MoviesListState extends State<MoviesList> {
@@ -83,9 +84,16 @@ class _MoviesListState extends State<MoviesList> {
                                 },
                                 child: new Container(
                                   decoration: new BoxDecoration(
-                                    color:  isSelected(_data[index])
-                                        ? Colors.red
-                                        : Colors.white,
+                                      color: Colors.white,
+                                      boxShadow: isSelected(_data[index])
+                                          ? <BoxShadow>[
+                                        new BoxShadow (
+                                          color: const Color(0xcc333333),
+                                          offset: new Offset(0.0, 2.0),
+                                          blurRadius: 6.0,
+                                        ),
+                                      ] : null
+
                                   ),
                                   alignment: Alignment.centerLeft,
                                   height: 48.00,
