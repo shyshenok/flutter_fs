@@ -4,31 +4,32 @@ import 'package:flutter_fs/utils/listOfLists.dart';
 import 'package:flutter_fs/utils/usersManager.dart';
 
 
-class CreateListModalDialog extends StatefulWidget {
+typedef void OnClickOk(String item);
+
+class TextModalDialog extends StatefulWidget {
 
   String currentName;
 
-  CreateListModalDialog(this.currentName);
+  final OnClickOk clickOk;
+
+
+  TextModalDialog(this.currentName, this.clickOk);
 
   @override
-  State createState() => new _CreateListModalDialogState(this.currentName);
+  State createState() => new _TextModalDialogState(this.currentName, this.clickOk);
 }
 
-class _CreateListModalDialogState extends State<CreateListModalDialog> {
-  final reference = FirebaseDatabase.instance.reference().child('list/movies');
+class _TextModalDialogState extends State<TextModalDialog> {
   TextEditingController _listName;
   String currentName;
 
-  _CreateListModalDialogState(this.currentName) {
+  final OnClickOk ckickOk;
+
+
+  _TextModalDialogState(this.currentName, this.ckickOk) {
     _listName = new TextEditingController(text: currentName);
   }
 
-  void saveListName(String listName) {
-    final entry = new ListOfLists(
-        listName, new UserManager().googleSignIn.currentUser.id);
-
-    reference.push().set(entry.toJson());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,9 @@ class _CreateListModalDialogState extends State<CreateListModalDialog> {
           new SimpleDialogOption(
             child: new FlatButton(
                 onPressed: () {
-                  saveListName(_listName.text);
+
+                  ckickOk(_listName.text);
+
                   Navigator.pop(context);
                 },
                 child: new Text(

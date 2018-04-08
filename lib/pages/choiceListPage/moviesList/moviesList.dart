@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_fs/pages/addingFilmModalDialog.dart';
 import 'package:flutter_fs/pages/choiceListPage/moviesList/detailListOfMovies/detailListofMovies.dart';
 import 'package:flutter_fs/utils/listOfLists.dart';
+import 'package:flutter_fs/utils/usersManager.dart';
 
 typedef void OnMovieLongTap(ListOfLists item);
 
@@ -37,11 +38,19 @@ class _MoviesListState extends State<MoviesList> {
   _MoviesListState(this.onLongTapCallback, this.onBackPress, this.isSelected) {
     mainReference.onChildAdded.listen(_onEntryAdded);
     mainReference.onChildRemoved.listen(_onEntryRemoved);
+    mainReference.onChildChanged.listen(_onEntryEdited);
   }
 
   _onEntryAdded(Event event) {
     setState(() {
       _data.add(new ListOfLists.fromSnapshot(event.snapshot));
+    });
+  }
+
+  _onEntryEdited(Event event) {
+    var oldValue = _data.singleWhere((item) => item.key == event.snapshot.key);
+    setState(() {
+      _data[_data.indexOf(oldValue)] = new ListOfLists.fromSnapshot(event.snapshot);
     });
   }
 
@@ -179,8 +188,15 @@ class _MoviesListState extends State<MoviesList> {
   _showDialog() async {
     await showDialog<String>(
         context: context,
-        child: new CreateListModalDialog(null)
+        child: new TextModalDialog(null, _onSubmitAdd)
     );
+  }
+
+  void _onSubmitAdd(String string) {
+    final entry = new ListOfLists(
+        string, new UserManager().googleSignIn.currentUser.id);
+
+    mainReference.push().set(entry.toJson());
   }
 }
 

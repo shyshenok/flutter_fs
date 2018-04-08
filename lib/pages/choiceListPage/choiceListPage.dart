@@ -105,17 +105,24 @@ class _ChoiceListState extends State<ChoiceList> {
     return currentItem != null && currentItem == item;
   }
 
-  void _changeItem(startText) async {
+  void _changeItem(String startText) async {
     await showDialog<String>(
         context: context,
-        child: new CreateListModalDialog(startText)
+        child: new TextModalDialog(startText, onSubmitChange)
     );
+  }
+
+  void onSubmitChange(String string) {
+
+    currentItem.listName = string;
+
+    reference.child(currentItem.key).set(currentItem.toJson());
   }
 
   void _deleteFromList() async {
     await showDialog<String>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: false,
       child: new AlertDialog(
         title: new Text('Confirm delete'),
         content: new SingleChildScrollView(
