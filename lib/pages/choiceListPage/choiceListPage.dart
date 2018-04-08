@@ -25,15 +25,18 @@ class _ChoiceListState extends State<ChoiceList> {
 
   @override
   Widget build(BuildContext context) {
-
     List<Widget> menu = ifTapped() ?
     <Widget>[
       new IconButton(
-        onPressed: (){_changeItem(currentItem.listName);},
+        onPressed: () {
+          _changeItem(currentItem.listName);
+        },
         icon: new Icon(Icons.edit),
       ),
       new IconButton(
-        onPressed: (){_deleteFromList();},
+        onPressed: () {
+          _deleteFromList();
+        },
         icon: new Icon(Icons.delete),
       ),
     ] :
@@ -44,33 +47,34 @@ class _ChoiceListState extends State<ChoiceList> {
     return new DefaultTabController(
         length: 3,
         child: new WillPopScope(
-            onWillPop: onBackPress,
-            child: new Scaffold(
-              appBar: new AppBar(
-                leading: ifTapped() ? new IconButton(
-                     icon: new Icon(Icons.arrow_back),
-                     onPressed: onBackPress)
-                    : null,
-                actions: menu,
-                backgroundColor:(ifTapped() ? new Color(0xFF076778) : new Color(0xFF228ba0)),
-                title: new Text('Select list'),
-                bottom: new TabBar(
-                  tabs: [
-                    new Tab(text: 'Movies'),
-                    new Tab(text: 'Places'),
-                    new Tab(text: 'Books'),
-                  ],
-                ),
-              ),
-              drawer: createDrawer(context),
-              body: new TabBarView(
-                children: [
-                  moviesList,
-                  new Icon(Icons.directions_transit),
-                  new Icon(Icons.directions_bike),
+          onWillPop: onBackPress,
+          child: new Scaffold(
+            appBar: new AppBar(
+              leading: ifTapped() ? new IconButton(
+                  icon: new Icon(Icons.arrow_back),
+                  onPressed: onBackPress)
+                  : null,
+              actions: menu,
+              backgroundColor: (ifTapped() ? new Color(0xFF076778) : new Color(
+                  0xFF228ba0)),
+              title: new Text('Select list'),
+              bottom: new TabBar(
+                tabs: [
+                  new Tab(text: 'Movies'),
+                  new Tab(text: 'Places'),
+                  new Tab(text: 'Books'),
                 ],
               ),
             ),
+            drawer: createDrawer(context),
+            body: new TabBarView(
+              children: [
+                moviesList,
+                new Icon(Icons.directions_transit),
+                new Icon(Icons.directions_bike),
+              ],
+            ),
+          ),
         )
 
     );
@@ -88,7 +92,6 @@ class _ChoiceListState extends State<ChoiceList> {
   }
 
   Future<bool> onBackPress() {
-
     final flag = ifTapped();
 
     currentItem = null;
@@ -99,7 +102,6 @@ class _ChoiceListState extends State<ChoiceList> {
   }
 
   bool isSelected(ListOfLists item) {
-
     return currentItem != null && currentItem == item;
   }
 
@@ -110,8 +112,36 @@ class _ChoiceListState extends State<ChoiceList> {
     );
   }
 
-  void _deleteFromList() {
-    reference.child(currentItem.key).remove();
+  void _deleteFromList() async {
+    await showDialog<String>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      child: new AlertDialog(
+        title: new Text('Confirm delete'),
+        content: new SingleChildScrollView(
+          child: new ListBody(
+            children: <Widget>[
+              new Text('Are you really want to delete this list?'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text('Delete'),
+            onPressed: () {
+              reference.child(currentItem.key).remove();
+              Navigator.of(context).pop();
+            },
+          ),
+          new FlatButton(
+            child: new Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
 
