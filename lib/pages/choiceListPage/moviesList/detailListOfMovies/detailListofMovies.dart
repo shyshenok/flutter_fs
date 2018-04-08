@@ -25,6 +25,32 @@ class _DetailListOfMoviesState extends State<DetailListOfMovies> {
         backgroundColor: new Color(0xFF228ba0),
         title: new Text("${data.listName}"),
       ),
+      body: new Container(
+        decoration: new BoxDecoration(
+          image: new DecorationImage(
+            image: new AssetImage("assets/images/3.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: new Stack(
+          children: <Widget>[
+            new Positioned (
+              right: 16.0,
+              bottom: 16.0,
+              child: new Container(
+                child: new FloatingActionButton(
+                    elevation: 6.0,
+                    child: new Icon(Icons.add),
+                    backgroundColor: new Color(0xFF228ba0),
+                    onPressed: () {
+
+                    }
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
