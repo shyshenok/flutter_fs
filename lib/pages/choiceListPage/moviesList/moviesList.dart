@@ -37,11 +37,18 @@ class _MoviesListState extends State<MoviesList> {
 
   _MoviesListState(this.onLongTapCallback, this.onBackPress, this.isSelected) {
     mainReference.onChildAdded.listen(_onEntryAdded);
+    mainReference.onChildRemoved.listen(_onEntryRemoved);
   }
 
   _onEntryAdded(Event event) {
     setState(() {
       _data.add(new ListOfLists.fromSnapshot(event.snapshot));
+    });
+  }
+
+  _onEntryRemoved(Event event) {
+    setState(() {
+      _data.removeWhere((item) => item.key == event.snapshot.key);
     });
   }
 

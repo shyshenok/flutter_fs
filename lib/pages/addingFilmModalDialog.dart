@@ -20,8 +20,6 @@ class _CreateListModalDialogState extends State<CreateListModalDialog> {
   String currentName;
 
   _CreateListModalDialogState(this.currentName) {
-    print(currentName);
-
     _listName = new TextEditingController(text: currentName);
   }
 

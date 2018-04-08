@@ -111,10 +111,8 @@ class _ChoiceListState extends State<ChoiceList> {
   }
 
   void _deleteFromList() {
-
+    reference.child(currentItem.key).remove();
   }
-
-
 }
 
 
