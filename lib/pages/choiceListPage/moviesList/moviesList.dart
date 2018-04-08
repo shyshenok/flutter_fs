@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -101,10 +100,10 @@ class _MoviesListState extends State<MoviesList> {
                                       horizontal: 16.00
                                   ),
                                   child: new Text(
-                                    '${_data[index].listName}',
-                                    style: new TextStyle(
-                                      fontSize: 16.00,
-                                    ),
+                                        '${_data[index].listName}',
+                                        style: new TextStyle(
+                                          fontSize: 16.00,
+                                        ),
                                   ),
                                 )
                             ),
@@ -144,7 +143,7 @@ class _MoviesListState extends State<MoviesList> {
   _showDialog() async {
     await showDialog<String>(
         context: context,
-        child: new CreateListModalDialog()
+        child: new CreateListModalDialog(null)
     );
   }
 }

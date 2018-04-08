@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fs/pages/addingFilmModalDialog.dart';
 import 'package:flutter_fs/pages/choiceListPage/moviesList/moviesList.dart';
 import 'package:flutter_fs/pages/drawer.dart';
 import 'package:flutter_fs/utils/listOfLists.dart';
@@ -18,6 +20,8 @@ class _ChoiceListState extends State<ChoiceList> {
   ListOfLists currentItem;
 
   MoviesList moviesList;
+  final reference = FirebaseDatabase.instance.reference().child('list/movies');
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +29,11 @@ class _ChoiceListState extends State<ChoiceList> {
     List<Widget> menu = ifTapped() ?
     <Widget>[
       new IconButton(
-        onPressed: (){},
+        onPressed: (){_changeItem(currentItem.listName);},
         icon: new Icon(Icons.edit),
       ),
       new IconButton(
-        onPressed: (){},
+        onPressed: (){_deleteFromList();},
         icon: new Icon(Icons.delete),
       ),
     ] :
@@ -98,6 +102,19 @@ class _ChoiceListState extends State<ChoiceList> {
 
     return currentItem != null && currentItem == item;
   }
+
+  void _changeItem(startText) async {
+    await showDialog<String>(
+        context: context,
+        child: new CreateListModalDialog(startText)
+    );
+  }
+
+  void _deleteFromList() {
+
+  }
+
+
 }
 
 

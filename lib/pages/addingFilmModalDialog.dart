@@ -5,14 +5,25 @@ import 'package:flutter_fs/utils/usersManager.dart';
 
 
 class CreateListModalDialog extends StatefulWidget {
+
+  String currentName;
+
+  CreateListModalDialog(this.currentName);
+
   @override
-  State createState() => new CreateListModalDialogState();
+  State createState() => new _CreateListModalDialogState(this.currentName);
 }
 
-class CreateListModalDialogState extends State<CreateListModalDialog> {
+class _CreateListModalDialogState extends State<CreateListModalDialog> {
   final reference = FirebaseDatabase.instance.reference().child('list/movies');
-  final TextEditingController _listName = new TextEditingController();
+  TextEditingController _listName;
+  String currentName;
 
+  _CreateListModalDialogState(this.currentName) {
+    print(currentName);
+
+    _listName = new TextEditingController(text: currentName);
+  }
 
   void saveListName(String listName) {
     final entry = new ListOfLists(
@@ -40,7 +51,8 @@ class CreateListModalDialogState extends State<CreateListModalDialog> {
               maxLines: 1,
               decoration: new InputDecoration(
                   hintText: 'Type list name',
-                  labelText: 'List name'
+                  labelText: 'List name',
+
               ),
             ),
           ),
