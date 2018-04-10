@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fs/pages/searchForItem.dart';
 import 'package:flutter_fs/utils/listOfLists.dart';
 import 'package:meta/meta.dart';
 
@@ -43,7 +44,7 @@ class _DetailListOfMoviesState extends State<DetailListOfMovies> {
                     child: new Icon(Icons.add),
                     backgroundColor: new Color(0xFF228ba0),
                     onPressed: () {
-
+                      _openSearchForItemDialog();
                     }
                 ),
               ),
@@ -54,5 +55,12 @@ class _DetailListOfMoviesState extends State<DetailListOfMovies> {
     );
   }
 
-
+  void _openSearchForItemDialog() {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+        builder: (BuildContext context) {
+          return new SearchForItem();
+        },
+        fullscreenDialog: true
+    ));
+  }
 }
