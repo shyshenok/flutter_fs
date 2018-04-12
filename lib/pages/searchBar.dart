@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'dart:io';
+
 
 typedef AppBar AppBarCallback(BuildContext context);
 typedef void TextFieldSubmitCallback(String value);
@@ -7,29 +11,19 @@ typedef void SetStateCallback(void fn());
 
 class SearchBar {
   final bool inBar;
-
   final bool colorBackButton;
-
   final bool closeOnSubmit;
-
   final bool clearOnSubmit;
-
   final AppBarCallback buildDefaultAppBar;
-
   final TextFieldSubmitCallback onSubmitted;
-
   final SetStateCallback setState;
-
   final bool showClearButton;
 
+  String apiKey;
   String hintText;
-
   TextEditingController controller;
-
   bool _isSearching = false;
-
   bool _clearActive = false;
-
   AppBar _defaultAppBar;
 
   SearchBar({
@@ -37,6 +31,7 @@ class SearchBar {
     @required this.buildDefaultAppBar,
     this.onSubmitted,
     this.controller,
+    this.apiKey = 'd59e2b0b45e54e54737b34e64dd843b3',
     this.hintText = 'Search',
     this.inBar = false,
     this.colorBackButton = true,
@@ -59,6 +54,7 @@ class SearchBar {
             _clearActive = false;
           });
         }
+        print(controller.text);
 
         return;
       }
@@ -69,11 +65,13 @@ class SearchBar {
         });
       }
     });
+
   }
 
   bool get isSearching => _isSearching;
 
   void beginSearch(context) {
+    print(context);
     ModalRoute.of(context).addLocalHistoryEntry(new LocalHistoryEntry(
         onRemove: () {
           setState(() {
@@ -98,7 +96,6 @@ class SearchBar {
 
     Color barColor = inBar ? _defaultAppBar.backgroundColor : theme.canvasColor;
 
-    // Don't provide a color (make it white) if it's in the bar, otherwise color it or set it to grey.
     Color buttonColor = inBar ? null : (colorBackButton ? _defaultAppBar.backgroundColor ?? theme.primaryColor ?? Colors.grey.shade400 : Colors.grey.shade400);
     Color buttonDisabledColor = inBar ? new Color.fromRGBO(255, 255, 255, 0.25) : Colors.grey.shade300;
 
@@ -112,6 +109,7 @@ class SearchBar {
       title: new Directionality(
           textDirection: Directionality.of(context),
           child: new TextField(
+            controller: controller,
             style: new TextStyle(
                 color: textColor,
                 fontSize: 16.0
@@ -124,6 +122,8 @@ class SearchBar {
                 ),
                 border: InputBorder.none
             ),
+            onChanged: (String value) {
+              _getListMovies(apiKey, value);},
             onSubmitted: (String val) async {
               if (closeOnSubmit) {
                 await Navigator.maybePop(context);
@@ -136,7 +136,6 @@ class SearchBar {
               onSubmitted(val);
             },
             autofocus: true,
-            controller: controller,
           )
       ),
       actions: !showClearButton ? null : <Widget>[
@@ -159,5 +158,18 @@ class SearchBar {
 
   AppBar build(BuildContext context) {
     return _isSearching ? buildSearchBar(context) : buildAppBar(context);
+  }
+
+
+  _getListMovies(apiKey, value)  async {
+    var httpClient = new HttpClient();
+    var uri = new Uri.https('api.themoviedb.org','/3/search/movie', {'api_key': apiKey, 'query': value,
+                                                                    'language': 'ru','include_image_language': 'ru'});
+    print(uri);
+    var request = await httpClient.getUrl(uri);
+    var response = await request.close();
+    var responseBody = await response.transform(UTF8.decoder).join();
+    print(responseBody);
+    return responseBody;
   }
 }
