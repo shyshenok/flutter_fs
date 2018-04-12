@@ -16,7 +16,6 @@ class DetailListOfMovies extends StatefulWidget {
 
 class _DetailListOfMoviesState extends State<DetailListOfMovies> {
   final ListOfLists data;
-
   _DetailListOfMoviesState(this.data);
 
   @override

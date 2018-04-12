@@ -188,7 +188,7 @@ class _MoviesListState extends State<MoviesList> {
   _showDialog() async {
     await showDialog<String>(
         context: context,
-        child: new TextModalDialog(null, _onSubmitAdd)
+        child: new TextModalDialog(null, _onSubmitAdd, false, null)
     );
   }
 

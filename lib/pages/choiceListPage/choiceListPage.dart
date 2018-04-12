@@ -108,7 +108,7 @@ class _ChoiceListState extends State<ChoiceList> {
   void _changeItem(String startText) async {
     await showDialog<String>(
         context: context,
-        child: new TextModalDialog(startText, onSubmitChange)
+        child: new TextModalDialog(startText, onSubmitChange, false, null)
     );
   }
 
