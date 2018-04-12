@@ -56,7 +56,7 @@ class _TextModalDialogState extends State<TextModalDialog> {
               maxLength: 150,
               maxLines: 1,
               decoration: new InputDecoration(
-                hintText: 'Type list name',
+                hintText: 'Type list name (at least 3 letters)',
                 labelText: 'List name',
 
               ),
@@ -85,7 +85,7 @@ class _TextModalDialogState extends State<TextModalDialog> {
   }
 
   void ifFullName(String text) {
-    if (text.length > 3) {
+    if (text.length >= 3) {
       setState(() {
         textColor = new Color(0xFF228ba0);
       });
