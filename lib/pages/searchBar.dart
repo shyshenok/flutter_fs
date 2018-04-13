@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:rxdart/rxdart.dart';
 
 
 typedef AppBar AppBarCallback(BuildContext context);
@@ -18,6 +19,7 @@ class SearchBar {
   final TextFieldSubmitCallback onSubmitted;
   final SetStateCallback setState;
   final bool showClearButton;
+  final subject = new PublishSubject<String>();
 
   String apiKey;
   String hintText;
@@ -65,6 +67,8 @@ class SearchBar {
         });
       }
     });
+
+    subject.stream.debounce(new Duration(milliseconds: 800)).listen(_getListMovies);
 
   }
 
@@ -123,7 +127,8 @@ class SearchBar {
                 border: InputBorder.none
             ),
             onChanged: (String value) {
-              _getListMovies(apiKey, value);},
+              (subject.add(value));
+            } ,
             onSubmitted: (String val) async {
               if (closeOnSubmit) {
                 await Navigator.maybePop(context);
@@ -160,16 +165,16 @@ class SearchBar {
     return _isSearching ? buildSearchBar(context) : buildAppBar(context);
   }
 
+  _getListMovies(String value)  async {
 
-  _getListMovies(apiKey, value)  async {
-    var httpClient = new HttpClient();
-    var uri = new Uri.https('api.themoviedb.org','/3/search/movie', {'api_key': apiKey, 'query': value,
-                                                                    'language': 'ru','include_image_language': 'ru'});
-    print(uri);
-    var request = await httpClient.getUrl(uri);
-    var response = await request.close();
-    var responseBody = await response.transform(UTF8.decoder).join();
-    print(responseBody);
-    return responseBody;
+    http.get('https://api.themoviedb.org/3/search/movie?api_key=' + apiKey + '&query=' + value +
+        '&language=ru&include_image_language=ru')
+        .then((response) => response.body)
+        .then(JSON.decode)
+        .then(print);
   }
+
+
+
+
 }
