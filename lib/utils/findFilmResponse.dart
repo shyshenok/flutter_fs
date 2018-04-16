@@ -1,5 +1,3 @@
-
-
 class FindFilmResponse {
 
   final bool adult;
@@ -28,68 +26,97 @@ class FindFilmResponse {
   final double voteAverage;
   final double voteCount;
 
-  FindFilmResponse (
-      this.adult,
-      this.backdropPath,
-      this.belongsToCollection,
-      this.budget,
-      this.genres,
-      this.homepage,
-      this.id,
-      this.imdbId,
-      this.originalLanguage,
-      this.originalTitle,
-      this.overview,
-      this.popularity,
-      this.posterPath,
-      this.productionCompanies,
-      this.productionCountries,
-      this.releaseDate, this.revenue,
-      this.runtime,
-      this.spokenLanguages,
-      this.status,
-      this.tagline,
-      this.title,
-      this.video,
-      this.voteAverage,
-      this.voteCount
-);
+  FindFilmResponse({
+    this.adult,
+    this.backdropPath,
+    this.belongsToCollection,
+    this.budget,
+    this.genres,
+    this.homepage,
+    this.id,
+    this.imdbId,
+    this.originalLanguage,
+    this.originalTitle,
+    this.overview,
+    this.popularity,
+    this.posterPath,
+    this.productionCompanies,
+    this.productionCountries,
+    this.releaseDate, this.revenue,
+    this.runtime,
+    this.spokenLanguages,
+    this.status,
+    this.tagline,
+    this.title,
+    this.video,
+    this.voteAverage,
+    this.voteCount});
+
+  factory FindFilmResponse.fromJson(Map<String, dynamic> json) {
+    return new FindFilmResponse(
+        adult: json['adult'],
+        backdropPath: json['backdropPath'],
+        belongsToCollection: json['belongsToCollection'],
+        budget: json['budget'],
+        genres: json['genres'],
+        homepage: json['homepage'],
+        id: json['id'],
+        imdbId: json['imdbId'],
+        originalLanguage: json['originalLanguage'],
+        originalTitle: json['originalTitle'],
+        overview: json['overview'],
+        popularity: json['popularity'],
+        posterPath: json['posterPath'],
+        productionCompanies: json['productionCompanies'],
+        productionCountries: json['productionCountries'],
+        releaseDate: json['releaseDate'],
+        revenue: json['revenue'],
+        runtime: json['runtime'],
+        spokenLanguages: json['spokenLanguages'],
+        status: json['status'],
+        tagline: json['tagline'],
+        title: json['title'],
+        video: json['video'],
+        voteAverage: json['voteAverage'],
+        voteCount: json['voteCount']
+    );
+  }
 
 }
 
 class BelongsToCollection {
-final int id;
-final String name;
-final String posterPath;
-final String backdropPath;
+  final int id;
+  final String name;
+  final String posterPath;
+  final String backdropPath;
 
   BelongsToCollection(this.id, this.name, this.posterPath, this.backdropPath);
 }
 
 class Genre {
-final int id;
-final String name;
+  final int id;
+  final String name;
 
   Genre(this.id, this.name);
 }
 
 class ProductionCompany {
-final String name;
-final int id;
+  final String name;
+  final int id;
 
   ProductionCompany(this.name, this.id);
 }
 
 class ProductionCountry {
-final String  iso_3166_1;
-final String name;
+  final String iso_3166_1;
+  final String name;
 
   ProductionCountry(this.iso_3166_1, this.name);
 }
 
 class SpokenLanguage {
- final String iso_639_1;
- final String name;
+  final String iso_639_1;
+  final String name;
 
   SpokenLanguage(this.iso_639_1, this.name);
 }
