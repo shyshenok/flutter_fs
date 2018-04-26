@@ -56,39 +56,25 @@ class _SearchForItemState extends State<SearchForItem> {
     return new Scaffold(
       appBar: searchBar.build(context),
       key: _scaffoldKey,
-      body: new Center(
-              child: new FutureBuilder<FindFilmResponse>(
-                builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return new Text(snapshot.data.title);
-                    } else if (snapshot.hasError) {
-                      return new Text("${snapshot.error}");
-                    }
-
-                    // By default, show a loading spinner
-                    return new CircularProgressIndicator();
-                },
-              ),
-            ),
-
-// new ListView.builder(
-//          itemCount: _data.length,
-//          itemBuilder: (BuildContext context, int index) {
-//            return new Container(
-//              child: new FutureBuilder<FindFilmResponse>(
-//                builder: (context, snapshot) {
-//                  if (snapshot.hasData) {
-//                    return new Text(snapshot.data.title);
-//                  } else if (snapshot.hasError) {
-//                    return new Text("${snapshot.error}");
-//                  }
-//
-//                  return new CircularProgressIndicator();
-//                },
-//              ),
-//            );
-//          }
-//      ),
+      body: new ListView.builder(
+          padding: new EdgeInsets.all(8.0),
+          itemCount: _data.length,
+          itemBuilder: (BuildContext context, int index) {
+            return new Card(
+                child: new Padding(
+                    padding: new EdgeInsets.all(8.0),
+                    child: new Row(
+                      children: <Widget>[
+//                        _data[index].posterPath != null? new Image.network(_data[index].posterPath): new Container(),
+                        new Flexible(
+                          child: new Text(_data[index].title, maxLines: 10),
+                        ),
+                      ],
+                    )
+                )
+            );
+          },
+        ),
     );
   }
 }
