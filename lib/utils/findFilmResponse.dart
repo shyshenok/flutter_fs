@@ -1,122 +1,77 @@
-class FindFilmResponse {
+library findFilmResponse;
+
+import 'package:json_annotation/json_annotation.dart';
+
+part 'findFilmResponse.g.dart';
+
+
+@JsonSerializable()
+class Response extends Object with _$ResponseSerializerMixin {
+  final int page;
+  final int totalResults;
+  final int totalPages;
+  final List<FindFilmResponse> results;
+
+  Response({this.page, this.totalResults, this.totalPages, this.results});
+
+  factory Response.fromJson(Map<String, dynamic> json) =>
+      _$ResponseFromJson(json);
+}
+
+@JsonSerializable()
+class FindFilmResponse extends Object with _$FindFilmResponseSerializerMixin {
+
+  FindFilmResponse({
+    this.posterPath,
+    this.adult,
+    this.overview,
+    this.releaseDate,
+    this.genres,
+    this.id,
+    this.originalLanguage,
+    this.originalTitle,
+    this.title,
+    this.backdropPath,
+    this.popularity,
+    this.video,
+    this.voteAverage,
+    this.voteCount
+    });
 
   final bool adult;
+  @JsonKey(name: 'backdrop_path')
   final String backdropPath;
-  final BelongsToCollection belongsToCollection;
-  final double budget;
   final List <Genre> genres;
-  final String homepage;
-  final double id;
-  final String imdbId;
+  final int id;
+  @JsonKey(name: 'original_language')
   final String originalLanguage;
+  @JsonKey(name: 'original_title')
   final String originalTitle;
   final String overview;
   final double popularity;
+  @JsonKey(name: 'poster_path')
   final String posterPath;
-  final List <ProductionCompany> productionCompanies;
-  final List <ProductionCountry> productionCountries;
+  @JsonKey(name: 'release_date')
   final String releaseDate;
-  final double revenue;
-  final double runtime;
-  final List <SpokenLanguage> spokenLanguages;
-  final String status;
-  final String tagline;
   final String title;
   final bool video;
+  @JsonKey(name: 'vote_average')
   final double voteAverage;
+  @JsonKey(name: 'vote_count')
   final double voteCount;
 
-  FindFilmResponse({
-    this.adult,
-    this.backdropPath,
-    this.belongsToCollection,
-    this.budget,
-    this.genres,
-    this.homepage,
-    this.id,
-    this.imdbId,
-    this.originalLanguage,
-    this.originalTitle,
-    this.overview,
-    this.popularity,
-    this.posterPath,
-    this.productionCompanies,
-    this.productionCountries,
-    this.releaseDate, this.revenue,
-    this.runtime,
-    this.spokenLanguages,
-    this.status,
-    this.tagline,
-    this.title,
-    this.video,
-    this.voteAverage,
-    this.voteCount});
 
-  factory FindFilmResponse.fromJson(Map<String, dynamic> json) {
-    return new FindFilmResponse(
-        adult: json['adult'],
-        backdropPath: json['backdropPath'],
-        belongsToCollection: json['belongsToCollection'],
-        budget: json['budget'],
-        genres: json['genres'],
-        homepage: json['homepage'],
-        id: json['id'],
-        imdbId: json['imdbId'],
-        originalLanguage: json['originalLanguage'],
-        originalTitle: json['originalTitle'],
-        overview: json['overview'],
-        popularity: json['popularity'],
-        posterPath: json['posterPath'],
-        productionCompanies: json['productionCompanies'],
-        productionCountries: json['productionCountries'],
-        releaseDate: json['releaseDate'],
-        revenue: json['revenue'],
-        runtime: json['runtime'],
-        spokenLanguages: json['spokenLanguages'],
-        status: json['status'],
-        tagline: json['tagline'],
-        title: json['title'],
-        video: json['video'],
-        voteAverage: json['voteAverage'],
-        voteCount: json['voteCount']
-    );
-  }
-
+  factory FindFilmResponse.fromJson(Map<String, dynamic> json) =>
+      _$FindFilmResponseFromJson(json);
 }
 
-class BelongsToCollection {
-  final int id;
-  final String name;
-  final String posterPath;
-  final String backdropPath;
-
-  BelongsToCollection(this.id, this.name, this.posterPath, this.backdropPath);
-}
-
-class Genre {
+@JsonSerializable()
+class Genre extends Object with _$GenreSerializerMixin{
   final int id;
   final String name;
 
-  Genre(this.id, this.name);
-}
+  Genre({this.id, this.name});
 
-class ProductionCompany {
-  final String name;
-  final int id;
-
-  ProductionCompany(this.name, this.id);
-}
-
-class ProductionCountry {
-  final String iso_3166_1;
-  final String name;
-
-  ProductionCountry(this.iso_3166_1, this.name);
-}
-
-class SpokenLanguage {
-  final String iso_639_1;
-  final String name;
-
-  SpokenLanguage(this.iso_639_1, this.name);
+  factory Genre.fromJson(Map<String, dynamic> json) =>
+      _$GenreFromJson(json);
 }

@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_fs/utils/findFilmResponse.dart';
 import 'package:meta/meta.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
 
-
+typedef void OnNewItems(Response listOfItems);
 typedef AppBar AppBarCallback(BuildContext context);
 typedef void TextFieldSubmitCallback(String value);
 typedef void SetStateCallback(void fn());
@@ -20,6 +21,7 @@ class SearchBar {
   final SetStateCallback setState;
   final bool showClearButton;
   final subject = new PublishSubject<String>();
+  final OnNewItems onNewItems;
 
   String apiKey;
   String hintText;
@@ -31,6 +33,7 @@ class SearchBar {
   SearchBar({
     @required this.setState,
     @required this.buildDefaultAppBar,
+    @required this.onNewItems,
     this.onSubmitted,
     this.controller,
     this.apiKey = 'd59e2b0b45e54e54737b34e64dd843b3',
@@ -68,8 +71,8 @@ class SearchBar {
       }
     });
 
-    subject.stream.debounce(new Duration(milliseconds: 800)).listen(_getListMovies);
-
+    subject.stream.debounce(new Duration(milliseconds: 800)).listen(
+        getListMovies);
   }
 
   bool get isSearching => _isSearching;
@@ -100,8 +103,12 @@ class SearchBar {
 
     Color barColor = inBar ? _defaultAppBar.backgroundColor : theme.canvasColor;
 
-    Color buttonColor = inBar ? null : (colorBackButton ? _defaultAppBar.backgroundColor ?? theme.primaryColor ?? Colors.grey.shade400 : Colors.grey.shade400);
-    Color buttonDisabledColor = inBar ? new Color.fromRGBO(255, 255, 255, 0.25) : Colors.grey.shade300;
+    Color buttonColor = inBar ? null : (colorBackButton ? _defaultAppBar
+        .backgroundColor ?? theme.primaryColor ?? Colors.grey.shade400 : Colors
+        .grey.shade400);
+    Color buttonDisabledColor = inBar
+        ? new Color.fromRGBO(255, 255, 255, 0.25)
+        : Colors.grey.shade300;
 
     Color textColor = inBar ? Colors.white70 : Colors.black54;
 
@@ -128,7 +135,7 @@ class SearchBar {
             ),
             onChanged: (String value) {
               (subject.add(value));
-            } ,
+            },
             onSubmitted: (String val) async {
               if (closeOnSubmit) {
                 await Navigator.maybePop(context);
@@ -145,9 +152,12 @@ class SearchBar {
       ),
       actions: !showClearButton ? null : <Widget>[
         new IconButton(
-            icon: new Icon(Icons.clear, color: _clearActive ? buttonColor : buttonDisabledColor),
+            icon: new Icon(Icons.clear,
+                color: _clearActive ? buttonColor : buttonDisabledColor),
             disabledColor: buttonDisabledColor,
-            onPressed: !_clearActive ? null : () { controller.clear(); })
+            onPressed: !_clearActive ? null : () {
+              controller.clear();
+            })
       ],
     );
   }
@@ -165,16 +175,18 @@ class SearchBar {
     return _isSearching ? buildSearchBar(context) : buildAppBar(context);
   }
 
-  _getListMovies(String value)  async {
-
-    http.get('https://api.themoviedb.org/3/search/movie?api_key=' + apiKey + '&query=' + value +
-        '&language=ru&include_image_language=ru')
+  getListMovies(String value) async {
+    final response = http.get(
+        'https://api.themoviedb.org/3/search/movie?api_key=' + apiKey +
+            '&query=' + value +
+            '&language=ru&include_image_language=ru')
         .then((response) => response.body)
         .then(JSON.decode)
-        .then(print);
+        .then((res) => new Response.fromJson(res))
+        .then(onNewItems);
+
+    print(response);
   }
-
-
 
 
 }

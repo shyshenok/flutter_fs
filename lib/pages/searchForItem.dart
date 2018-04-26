@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fs/pages/searchBar.dart';
+import 'package:flutter_fs/utils/findFilmResponse.dart';
 
 
 class SearchForItem extends StatefulWidget {
@@ -12,6 +13,7 @@ class SearchForItem extends StatefulWidget {
 
 class _SearchForItemState extends State<SearchForItem> {
 
+  List <FindFilmResponse> _data = new List <FindFilmResponse>();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   SearchBar searchBar;
@@ -21,15 +23,15 @@ class _SearchForItemState extends State<SearchForItem> {
         inBar: false,
         buildDefaultAppBar: buildAppBar,
         setState: setState,
-        onSubmitted: onSubmitted);
-
+        onSubmitted: onSubmitted,
+        onNewItems: onNewData
+    );
   }
-
 
 
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-      title: new Text('Search Bar Demo'),
+        title: new Text('Search Bar Demo'),
         actions: [searchBar.getSearchAction(context)]
     );
   }
@@ -42,6 +44,11 @@ class _SearchForItemState extends State<SearchForItem> {
             new SnackBar(content: new Text('You wrote $value!'))));
   }
 
+  void onNewData(Response data) {
+    _data.clear();
+    _data.addAll(data.results);
+    setState((){});
+  }
 
 
   @override
@@ -49,15 +56,39 @@ class _SearchForItemState extends State<SearchForItem> {
     return new Scaffold(
       appBar: searchBar.build(context),
       key: _scaffoldKey,
+      body: new Center(
+              child: new FutureBuilder<FindFilmResponse>(
+                builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return new Text(snapshot.data.title);
+                    } else if (snapshot.hasError) {
+                      return new Text("${snapshot.error}");
+                    }
+
+                    // By default, show a loading spinner
+                    return new CircularProgressIndicator();
+                },
+              ),
+            ),
+
+// new ListView.builder(
+//          itemCount: _data.length,
+//          itemBuilder: (BuildContext context, int index) {
+//            return new Container(
+//              child: new FutureBuilder<FindFilmResponse>(
+//                builder: (context, snapshot) {
+//                  if (snapshot.hasData) {
+//                    return new Text(snapshot.data.title);
+//                  } else if (snapshot.hasError) {
+//                    return new Text("${snapshot.error}");
+//                  }
+//
+//                  return new CircularProgressIndicator();
+//                },
+//              ),
+//            );
+//          }
+//      ),
     );
   }
-
 }
-
-
-
-//'https://api.themoviedb.org/3/search/movie?api_key=' + this.apiKey + '&query=' +
-//o.title.replace(" ", '+') + "&language=ru&include_image_language=ru"
-
-
-//  apiKey: string = 'd59e2b0b45e54e54737b34e64dd843b3';
