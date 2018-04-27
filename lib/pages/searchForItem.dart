@@ -60,12 +60,14 @@ class _SearchForItemState extends State<SearchForItem> {
           padding: new EdgeInsets.all(8.0),
           itemCount: _data.length,
           itemBuilder: (BuildContext context, int index) {
+            print(_data[index].posterPath);
+
             return new Card(
                 child: new Padding(
                     padding: new EdgeInsets.all(8.0),
                     child: new Row(
                       children: <Widget>[
-//                        _data[index].posterPath != null? new Image.network(_data[index].posterPath): new Container(),
+                        _data[index].posterPath != null? new Image.network('https://image.tmdb.org/t/p/w500/' + _data[index].posterPath): new Container(),
                         new Flexible(
                           child: new Text(_data[index].title, maxLines: 10),
                         ),
