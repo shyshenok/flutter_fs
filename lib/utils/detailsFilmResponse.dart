@@ -6,19 +6,6 @@ part 'detailsFilmResponse.g.dart';
 
 
 @JsonSerializable()
-class DetailResponse extends Object with _$DetailResponseSerializerMixin {
-  final int page;
-  final int totalResults;
-  final int totalPages;
-  final List<DetailFilmResponse> results;
-
-  DetailResponse({this.page, this.totalResults, this.totalPages, this.results});
-
-  factory DetailResponse.fromJson(Map<String, dynamic> json) =>
-      _$DetailResponseFromJson(json);
-}
-
-@JsonSerializable()
 class DetailFilmResponse extends Object with _$DetailFilmResponseSerializerMixin {
 
   DetailFilmResponse({

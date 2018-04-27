@@ -176,7 +176,7 @@ class SearchBar {
   }
 
   getListMovies(String value) async {
-    final response = http.get(
+    http.get(
         'https://api.themoviedb.org/3/search/movie?api_key=' + apiKey +
             '&query=' + value +
             '&language=ru&include_image_language=ru')
@@ -184,8 +184,6 @@ class SearchBar {
         .then(JSON.decode)
         .then((res) => new Response.fromJson(res))
         .then(onNewItems);
-
-    print(response);
   }
 
 
