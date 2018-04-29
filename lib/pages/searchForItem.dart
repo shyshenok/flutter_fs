@@ -4,7 +4,7 @@ import 'package:flutter_fs/utils/detailsFilmResponse.dart';
 import 'package:flutter_fs/utils/findFilmResponse.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SearchForItem extends StatefulWidget {
 
@@ -76,8 +76,9 @@ class _SearchForItemState extends State<SearchForItem> {
                   child: new Row(
                     children: <Widget>[
                       _data[index].posterPath != null ?
-                      new Image.network('https://image.tmdb.org/t/p/w500/' +
-                          _data[index].posterPath,
+                      new Image(
+                        image: new CachedNetworkImageProvider('https://image.tmdb.org/t/p/w500/' +
+                            _data[index].posterPath),
                           height: 150.00,
                           width: 100.00
                       ) : new Container(),
@@ -115,13 +116,10 @@ class _SearchForItemState extends State<SearchForItem> {
             '&language=ru&include_image_language=ru')
         .then((response) => response.body)
         .then(JSON.decode)
-        .then
-      ((response) {
-      print('hello');
-    })
         .then((res) => new DetailFilmResponse.fromJson(res))
         .then((detailFilmResponse) {
-      print('hello');
+      //add to firebase
+      //navigate to detail list movies
     });
   }
 }
