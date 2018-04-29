@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_fs/utils/detailsFilmResponse.dart';
 
@@ -27,14 +29,13 @@ class DetailsMovieItem {
         overview = snapshot.value["overview"],
         voteAverage = snapshot.value["voteAverage"],
         voteCount = snapshot.value["voteCount"],
-        releaseDate = snapshot.value["releaseDate"],
-  {}
-
+        releaseDate = snapshot.value["releaseDate"]
+  ;
   toJson() {
     return {
       "title": title,
       "posterPath": posterPath,
-      "genres": genres,
+      "genres": JSON.encode(genres),
       "runtime": runtime,
       "overview": overview,
       "voteAverage": voteAverage,

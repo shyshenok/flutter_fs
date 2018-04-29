@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_fs/pages/addingFilmModalDialog.dart';
 import 'package:flutter_fs/pages/choiceListPage/moviesList/detailListOfMovies/detailListofMovies.dart';
+import 'package:flutter_fs/utils/detailsMovieItem.dart';
 import 'package:flutter_fs/utils/listOfLists.dart';
 import 'package:flutter_fs/utils/usersManager.dart';
 
@@ -194,8 +195,11 @@ class _MoviesListState extends State<MoviesList> {
 
   void _onSubmitAdd(String string) {
     final entry = new ListOfLists(
-        string, new UserManager().googleSignIn.currentUser.id);
+        string, new UserManager().googleSignIn.currentUser.id,
+      new List()
+    );
 
+    print(entry.toJson());
     mainReference.push().set(entry.toJson());
   }
 }

@@ -43,7 +43,7 @@ class _DetailListOfMoviesState extends State<DetailListOfMovies> {
                     child: new Icon(Icons.add),
                     backgroundColor: new Color(0xFF228ba0),
                     onPressed: () {
-                      _openSearchForItemDialog();
+                      _openSearchForItemDialog(data.key);
                     }
                 ),
               ),
@@ -54,10 +54,10 @@ class _DetailListOfMoviesState extends State<DetailListOfMovies> {
     );
   }
 
-  void _openSearchForItemDialog() {
+  void _openSearchForItemDialog(String key) {
     Navigator.of(context).push(new MaterialPageRoute<Null>(
         builder: (BuildContext context) {
-          return new SearchForItem();
+          return new SearchForItem(refKey: key);
         },
         fullscreenDialog: true
     ));
